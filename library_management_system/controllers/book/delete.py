@@ -1,7 +1,7 @@
 from flask import flash, redirect, url_for
 from . import book
 
-# from library_management_system import db
+from library_management_system import db
 from ...models import Books
 
 
@@ -19,6 +19,7 @@ def delete_book(id):
 
     try:
         Books.query.filter(Books.id == id).delete()
+        db.session.commit()
     except Exception as e:
         print(e)
 

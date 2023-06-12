@@ -1,6 +1,7 @@
 from flask import flash, redirect, url_for
 from . import members
 from ...models import Members
+from library_management_system import db
 
 
 @members.route("/delete/<string:id>", methods=["POST"])
@@ -17,6 +18,7 @@ def delete_member(id):
 
     try:
         Members.query.filter(Members.id == id).delete()
+        db.session.commit()
     except Exception as e:
         print(e)
         flash(f"Member could not be deleted. Reason {e}", "danger")

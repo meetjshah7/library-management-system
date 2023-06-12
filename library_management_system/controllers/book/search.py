@@ -22,6 +22,6 @@ def search():
             or_(Books.title.contains(query), Books.author.contains(query))
         )
         .order_by(Books.id.asc())
-        .paginate(page=page, per_page=10)
+        .paginate(page=page, per_page=5)
     )
     return render_template("book/books.html", title=query, books=books, is_search=True)
