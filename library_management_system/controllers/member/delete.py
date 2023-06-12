@@ -5,6 +5,16 @@ from ...models import Members
 
 @members.route("/delete/<string:id>", methods=["POST"])
 def delete_member(id):
+    """
+    Delete a member.
+
+    Parameters:
+        id (str): The ID of the member to be deleted.
+
+    Returns:
+        Redirects to the route for displaying all members.
+    """
+
     try:
         Members.query.filter(Members.id == id).delete()
     except Exception as e:

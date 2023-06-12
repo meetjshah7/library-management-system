@@ -7,6 +7,16 @@ from library_management_system import db
 
 @members.route("/edit/<string:id>", methods=["GET", "POST"])
 def edit_member(id):
+    """
+    Edit the details of a member.
+
+    Parameters:
+        id (str): The ID of the member to be edited.
+
+    Returns:
+        Redirects to the route for displaying all members after the member has been updated.
+
+    """
     form: AddMember = AddMember(request.form)
 
     if request.method == "POST" and form.validate():

@@ -24,6 +24,14 @@ class Books(db.Model):
     publisher = db.Column(db.String(255), nullable=False)
 
     def __init__(self, book, quantity):
+        """
+        Parameters
+        ----------
+        self : [Argument]
+        book : [Argument]
+        quantity : [Argument]
+
+        """
         self.book_id = book["bookID"]
         self.isbn = book["isbn"]
         self.isbn13 = book["isbn13"]
@@ -58,6 +66,13 @@ class Members(db.Model):
     )
 
     def __init__(self, member):
+        """
+        Parameters
+        ----------
+        self : [Argument]
+        member : [Argument]
+
+        """
         self.name = member["name"]
         self.email = member["email"]
         self.outstanding_debt = member["outstanding_debt"]
@@ -86,6 +101,15 @@ class Transactions(db.Model):
     )
 
     def __init__(self, member_id, book_id, per_day_rent):
+        """
+        Parameters
+        ----------
+        self : [Argument]
+        member_id : [Argument]
+        book_id : [Argument]
+        per_day_rent : [Argument]
+
+        """
         self.member_id = member_id
         self.book_id = book_id
         self.per_day_rent = per_day_rent

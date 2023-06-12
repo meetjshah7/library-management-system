@@ -7,6 +7,16 @@ from ...models import Books
 
 @book.route("/delete/<string:id>", methods=["POST"])
 def delete_book(id):
+    """
+    Delete a book from the library.
+
+    Args:
+        id (str): The ID of the book to be deleted.
+
+    Returns:
+        Redirects to the route for displaying all books.
+    """
+
     try:
         Books.query.filter(Books.id == id).delete()
     except Exception as e:

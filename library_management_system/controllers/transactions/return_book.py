@@ -13,6 +13,21 @@ class ReturnBook(Form):
 
 @transaction.route("/return_book/<string:transaction_id>", methods=["GET", "POST"])
 def return_book(transaction_id):
+    """
+    Return the issued book
+
+    Parameters:
+        transaction_id (str): The ID of the transaction for returning the book.
+
+    Returns:
+        If the request method is GET, it renders the 'transaction/return_book.html' template
+        with the return book form containing the necessary transaction details.
+
+        If the request method is POST and the form is valid, it processes the return book transaction.
+        On Success, it redirects to the 'transaction.all_transactions' endpoint.
+        On any Error, it renders the 'transaction/return_book.html' template with the error message.
+    """
+
     form: ReturnBook = ReturnBook(request.form)
     transaction: Transactions = Transactions.query.get(transaction_id)
 

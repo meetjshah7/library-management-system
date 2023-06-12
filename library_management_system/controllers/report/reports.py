@@ -6,6 +6,15 @@ from sqlalchemy import func
 
 @report.route("/reports")
 def reports():
+    """
+    Generate various reports based on book and member data.
+
+    Returns:
+        Renders the 'report/reports.html' template with the generated reports,
+        including the top books by rating, newest books, popular books, books with minimum
+        copies remaining, top members by amount spent, and top members by outstanding amount.
+    """
+
     top_books_by_rating = (
         Books.query.order_by(Books.average_rating.desc()).limit(5).all()
     )
@@ -29,7 +38,6 @@ def reports():
     books_with_min_copies_remaining = (
         Books.query.order_by((Books.quantity - Books.issued).asc()).limit(5).all()
     )
-    print(books_with_min_copies_remaining)
 
     return render_template(
         "report/reports.html",

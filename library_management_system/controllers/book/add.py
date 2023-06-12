@@ -7,6 +7,19 @@ from library_management_system import db
 
 @book.route("/add", methods=["GET", "POST"])
 def add_book():
+    """
+    Add a new book to the library.
+
+    Methods:
+        GET: Display the form to add a new book.
+        Returns:
+            render_template: Renders the 'add_book' template with the form and book data.
+
+        POST: Handle the submission of the form and add the book to the database.
+        Returns:
+            redirect: Redirects to the route for displaying all books.
+    """
+
     form: AddBook = AddBook(request.form)
 
     if request.method == "POST" and form.validate():

@@ -6,6 +6,13 @@ from sqlalchemy import or_
 
 @book.route("/search", methods=["GET", "POST"])
 def search():
+    """
+    Perform a search for books based on a query.
+
+    Returns:
+        Renders the 'book/books.html' template with the search results.
+    """
+
     page = request.args.get("page", 1, type=int)
     query = request.form.get("search")
     if query is None:

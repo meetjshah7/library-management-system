@@ -5,6 +5,13 @@ from . import members
 
 @members.route("/list")
 def all_members():
+    """
+    Display a list of all members.
+
+    Returns:
+        Renders the 'member/members.html' template with the list of members
+    """
+
     page = request.args.get("page", 1, type=int)
     members = Members.query.order_by(Members.id.asc()).paginate(page=page, per_page=5)
     is_empty = len(members.items) == 0

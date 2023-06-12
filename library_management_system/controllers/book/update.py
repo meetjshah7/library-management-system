@@ -7,6 +7,16 @@ from library_management_system import db
 
 @book.route("/edit/<string:id>", methods=["GET", "POST"])
 def edit_book(id):
+    """
+    Edit the details of a book.
+
+    Parameters:
+        id (str): The ID of the book to be edited.
+
+    Returns:
+        Redirects to the route for displaying all books.
+    """
+
     form: AddBook = AddBook(request.form)
 
     book: Books = Books.query.get(id)
@@ -29,7 +39,6 @@ def edit_book(id):
         db.session.commit()
 
         flash("Book Updated", "success")
-
         return redirect(url_for("book.all_books"))
 
     return render_template("book/edit_book.html", form=form, book=book)

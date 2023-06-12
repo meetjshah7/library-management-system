@@ -7,6 +7,13 @@ from ...models import Members
 
 @members.route("/add", methods=["GET", "POST"])
 def add_member():
+    """
+    Add a new member.
+
+    Returns:
+        Redirects to the route for displaying all members.
+    """
+
     form: AddMember = AddMember(request.form)
 
     if request.method == "POST" and form.validate():

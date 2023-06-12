@@ -13,6 +13,17 @@ class IssueBook(Form):
 
 @transaction.route("/issue_book", methods=["GET", "POST"])
 def issue_book():
+    """
+    Issue a book to a member.
+
+    Returns:
+        Renders the 'transaction/issue_book.html' template with the form to issue a book.
+
+        If the request method is POST and the form is valid, it adds a new transaction to the database
+        and updates the book's issued count. If successful, it redirects to the 'transaction.all_transactions' route.
+        If the book is not available for renting, it renders the template with an error message.
+    """
+
     form: IssueBook = IssueBook(request.form)
 
     books: Books = Books.query.all()
