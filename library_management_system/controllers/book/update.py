@@ -5,17 +5,13 @@ from ...models import Books
 from library_management_system import db
 
 
-# Edit Book by ID
 @book.route('/edit/<string:id>', methods=['GET', 'POST'])
 def edit_book(id):
-    # Get form data from request
     form: AddBook = AddBook(request.form)
 
     book: Books = Books.query.get(id)
 
-    # To handle POST request to route
     if request.method == 'POST' and form.validate():
-
         book.book_id = form.book_id.data
         book.isbn = form.isbn.data
         book.isbn13 = form.isbn13.data
@@ -32,12 +28,8 @@ def edit_book(id):
 
         db.session.commit()
 
-        # Flash Success Message
         flash("Book Updated", "success")
 
-        # Redirect to show all books
         return redirect(url_for('book.all_books'))
 
-    # To handle GET request to route
-    # To render edit book form
     return render_template('book/edit_book.html', form=form, book=book)

@@ -5,7 +5,7 @@ from library_management_system.controllers.member.add_edit_form import AddMember
 from . import members
 from ...models import Members
 
-# Add Member
+
 @members.route('/add', methods=['GET', 'POST'])
 def add_member():
     form: AddMember = AddMember(request.form)
@@ -24,7 +24,7 @@ def add_member():
         new_member = Members(new)
         db.session.add(new_member)
         db.session.commit()
-        
+
         flash("Wohoo! New Member Added Successfully", "success")
 
         return redirect(url_for('members.all_members'))

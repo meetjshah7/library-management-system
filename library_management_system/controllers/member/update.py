@@ -4,6 +4,7 @@ from . import members
 from ...models import Members
 from library_management_system import db
 
+
 @members.route('/edit/<string:id>', methods=['GET', 'POST'])
 def edit_member(id):
     form: AddMember = AddMember(request.form)
@@ -12,15 +13,13 @@ def edit_member(id):
         name = form.name.data
         email = form.email.data
 
-
-        db.session.query(Members).filter(Members.id == id).update({
+        Members.query.filter(Members.id == id).update({
             'name': name,
             'email': email
         })
         db.session.commit()
 
         flash("Member Updated", "success")
-
         return redirect(url_for('members.all_members'))
 
     member = Members.query.get(id)

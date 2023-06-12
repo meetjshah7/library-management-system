@@ -1,7 +1,6 @@
 from flask import render_template, request
 from library_management_system.models import Books
 from . import book
-from sqlalchemy import or_
 
 
 @book.route('/list')

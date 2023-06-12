@@ -3,11 +3,8 @@ from . import book
 from ...models import Books
 
 
-# View Details of Book by ID
 @book.route('/view/<string:id>')
 def viewBook(id):
-    # Create MySQLCursor
-    
     book = Books.query.get(id)
 
     if book is not None:

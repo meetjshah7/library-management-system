@@ -5,6 +5,7 @@ import requests
 from ...models import Books
 from library_management_system import db
 
+
 class ImportBooks(Form):
     no_of_books = IntegerField('No. of Books*', [validators.NumberRange(min=1)])
     quantity_per_book = IntegerField('Quantity Per Book*', [validators.NumberRange(min=1)])
@@ -18,11 +19,12 @@ def import_books_via_frappe_API(parameters):
     url = 'https://frappe.io/api/method/frappe-library'
     r = requests.get(url=url, params=parameters)
     res = r.json()
-    # Break if message is empty
+
     if not res['message']:
         return None
 
     return res['message']
+
 
 def is_book_already_added(book_id):
     book = Books.query.filter_by(book_id=book_id).first()
@@ -30,13 +32,12 @@ def is_book_already_added(book_id):
         return False
     return True
 
-# Import Books from Frappe API
+
 @book.route('/import', methods=['GET', 'POST'])
 def import_books():
     form: ImportBooks = ImportBooks(request.form)
 
     if request.method == 'POST' and form.validate():
-    
         parameters = {'page': 1}
         if form.title.data:
             parameters['title'] = form.title.data
@@ -49,16 +50,17 @@ def import_books():
 
         books_imported_currently = 0
         duplicated_book_ids = []
-        while(books_imported_currently != form.no_of_books.data):
+
+        while (books_imported_currently != form.no_of_books.data):
             books = import_books_via_frappe_API(parameters=parameters)
             if books is None:
                 break
-            for book in books:
-                if is_book_already_added(book['bookID']):
-                    duplicated_book_ids.append(book['bookID'])
+            for single_book in books:
+                if is_book_already_added(single_book['bookID']):
+                    duplicated_book_ids.append(single_book['bookID'])
                 else:
                     new_book = Books(
-                        book=book,
+                        book=single_book,
                         quantity=form.quantity_per_book.data
                     )
                     db.session.add(new_book)
@@ -69,7 +71,6 @@ def import_books():
 
         db.session.commit()
 
-        # Flash Success/Warning Message
         msg = f'{books_imported_currently}/{form.no_of_books.data} books have been imported'
         msgType = 'success'
 
@@ -83,5 +84,5 @@ def import_books():
         flash(msg, msgType)
 
         return redirect(url_for('book.all_books'))
-    
+
     return render_template('book/import_books.html', form=form)

@@ -18,7 +18,7 @@ class Books(db.Model):
     num_pages = db.Column(db.Integer, nullable=False)
     ratings_count = db.Column(db.Integer, nullable=False)
     text_reviews_count = db.Column(db.Integer, nullable=False)
-    publication_date = db.Column(db.Date, nullable=False) 
+    publication_date = db.Column(db.Date, nullable=False)
     publisher = db.Column(db.String(255), nullable=False)
 
     def __init__(self, book, quantity):

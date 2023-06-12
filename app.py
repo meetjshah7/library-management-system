@@ -1,5 +1,4 @@
 from library_management_system import start_app
-from library_management_system.models import *
 
 app, db = start_app()
 

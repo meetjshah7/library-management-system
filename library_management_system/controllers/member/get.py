@@ -5,7 +5,6 @@ from ...models import Members
 
 @members.route('/view/<string:id>', methods=['GET'])
 def viewMember(id):
-    
     member = Members.query.get(id)
 
     if member is not None:
