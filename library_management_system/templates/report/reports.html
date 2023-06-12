@@ -1,0 +1,181 @@
+{% extends "base.html" %}
+{% block body %}
+    <br>
+    <h1>Reports</h1>
+    <hr>
+    {% if top_books_by_rating %}
+    <h3>Top Rated Books</h3><hr>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Book ID</th>
+                    <th>Title</th>
+                    <th>Authors</th>
+                    <th>Ratings</th>
+                    <th>Available</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in top_books_by_rating %}
+                <tr style="vertical-align: middle; cursor: pointer;">
+                    <td>{{book.book_id}}</span></td>
+                    <td>{{book.title}}</td>
+                    <td>{{book.author}}</td>
+                    <td>{{book.average_rating}}</td>
+                    <td>{{book.quantity - book.issued}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if popular_books %}
+    <br><h3>Popular Books</h3><hr>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Book ID</th>
+                    <th>Title</th>
+                    <th>Authors</th>
+                    <th>No. of times Rented</th>
+                    <th>Available</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in popular_books %}
+                <tr style="vertical-align: middle; cursor: pointer;">
+                    <td>{{book[0].book_id}}</span></td>
+                    <td>{{book[0].title}}</td>
+                    <td>{{book[0].author}}</td>
+                    <td>{{book[2]}}</td>
+                    <td>{{book[0].quantity - book[0].issued}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if newest_books %}
+    <br><h3>Newest Books</h3><hr>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Book ID</th>
+                    <th>Title</th>
+                    <th>Authors</th>
+                    <th>Ratings</th>
+                    <th>Available</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in top_books_by_rating %}
+                <tr style="vertical-align: middle; cursor: pointer;">
+                    <td>{{book.book_id}}</span></td>
+                    <td>{{book.title}}</td>
+                    <td>{{book.author}}</td>
+                    <td>{{book.average_rating}}</td>
+                    <td>{{book.quantity - book.issued}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if books_with_min_copies_remaining %}
+    <br><h3>Books with minimum copies remaning</h3><hr>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Book ID</th>
+                    <th>Title</th>
+                    <th>Authors</th>
+                    <th>Quantity</th>
+                    <th>Available</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for book in books_with_min_copies_remaining %}
+                <tr style="vertical-align: middle; cursor: pointer;">
+                    <td>{{book.book_id}}</span></td>
+                    <td>{{book.title}}</td>
+                    <td>{{book.author}}</td>
+                    <td>{{book.quantity}}</td>
+                    <td>{{book.quantity - book.issued}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if top_members_by_amount_spent %}
+    <br><h3>High Spending Members</h3><hr>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Member ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Amount Paid</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for member in top_members_by_amount_spent %}
+                <tr style="vertical-align: middle; cursor: pointer;">
+                    <td>{{member.id}}</td>
+                    <td>{{member.name}}</td>
+                    <td>{{member.email}}</td>
+                    <td>INR {{member.amount_spent}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if top_members_by_outstanding_amount %}
+    <br><h3>High Credit Members</h3><hr>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Member ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Outstanding Debt</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for member in top_members_by_outstanding_amount %}
+                <tr style="vertical-align: middle; cursor: pointer;">
+                    <td>{{member.id}}</td>
+                    <td>{{member.name}}</td>
+                    <td>{{member.email}}</td>
+                    <td>INR {{member.outstanding_debt}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+
+    {% if top_members_by_outstanding_amount %}
+    <br><h3>Top Members (By Books Rented)</h3><hr>
+        <table class="table table-hover">
+            <thead>
+                <tr>
+                    <th>Member ID</th>
+                    <th>Name</th>
+                    <th>Email</th>
+                    <th>Books Rented</th>
+                </tr>
+            </thead>
+            <tbody>
+                {% for member in top_members_by_outstanding_amount %}
+                <tr style="vertical-align: middle; cursor: pointer;">
+                    <td>{{member.id}}</td>
+                    <td>{{member.name}}</td>
+                    <td>{{member.email}}</td>
+                    <td>{{member.books | length}}</td>
+                </tr>
+                {% endfor %}
+            </tbody>
+        </table>
+    {% endif %}
+{% endblock body %}

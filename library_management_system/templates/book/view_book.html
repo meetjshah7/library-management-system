@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block body %}
+<br>
+{% if book %}
+<div class="d-flex justify-content-between">
+    <div>
+        <h4>{{book.title}}</h4>
+        <p style="line-height: 3px;"><i>by {{book.author}}</i></p>
+    </div>
+    <div><a href="{{url_for('book.edit_book', id=book.id)}}" class="btn btn-primary pull-right">Edit</a></div>
+</div>
+<br>
+<hr>
+<table class="table table-left">
+    <tbody>
+        <tr>
+            <td>Book ID</td>
+            <td>{{book.book_id}}</td>
+        </tr>
+        <tr>
+            <td>Title</td>
+            <td>{{book.title}}</td>
+        </tr>
+        <tr>
+            <td>Author(s)</td>
+            <td>{{book.author}}</td>
+        </tr>
+        <tr>
+            <td>Average Rating</td>
+            <td>{{book.average_rating}}</td>
+        </tr>
+        <tr>
+            <td>ISBN</td>
+            <td>{{book.isbn}}</td>
+        </tr>
+        <tr>
+            <td>ISBN13</td>
+            <td>{{book.isbn13}}</td>
+        </tr>
+        <tr>
+            <td>Language</td>
+            <td>{{book.language_code}}</td>
+        </tr>
+        <tr>
+            <td>No. of Pages</td>
+            <td>{{book.num_pages}}</td>
+        </tr>
+        <tr>
+            <td>No. of Ratings</td>
+            <td>{{book.ratings_count}}</td>
+        </tr>
+        <tr>
+            <td>No. of Text Reviews</td>
+            <td>{{book.text_reviews_count}}</td>
+        </tr>
+        <tr>
+            <td>Publication Date</td>
+            <td>{{book.publication_date.strftime('%b %d, %Y')}}</td>
+        </tr>
+        <tr>
+            <td>Publisher</td>
+            <td>{{book.publisher}}</td>
+        </tr>
+        <tr>
+            <td>Total Copies</td>
+            <td>{{book.quantity}}</td>
+        </tr>
+        <tr>
+            <td>Copies Available to Rent</td>
+            <td>{{book.quantity - book.issued}}</td>
+        </tr>
+        <tr>
+            <td>Copies Rented</td>
+            <td>{{book.issued}}</td>
+        </tr>
+    </tbody>
+</table>
+{% endif %}
+<style>
+    td {
+        padding: 15px !important;
+    }
+
+    td:nth-child(odd) {
+        font-weight: bold;
+    }
+</style>
+{% endblock %}
