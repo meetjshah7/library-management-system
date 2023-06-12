@@ -3,12 +3,12 @@ from . import book
 from ...models import Books
 
 
-@book.route('/view/<string:id>')
+@book.route("/view/<string:id>")
 def viewBook(id):
     book = Books.query.get(id)
 
     if book is not None:
-        return render_template('book/view_book.html', book=book)
+        return render_template("book/view_book.html", book=book)
     else:
-        msg = 'This book Does Not Exist'
-        return render_template('book/view_book.html', warning=msg)
+        msg = "This book Does Not Exist"
+        return render_template("book/view_book.html", warning=msg)

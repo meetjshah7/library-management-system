@@ -5,22 +5,19 @@ from ...models import Members
 from library_management_system import db
 
 
-@members.route('/edit/<string:id>', methods=['GET', 'POST'])
+@members.route("/edit/<string:id>", methods=["GET", "POST"])
 def edit_member(id):
     form: AddMember = AddMember(request.form)
 
-    if request.method == 'POST' and form.validate():
+    if request.method == "POST" and form.validate():
         name = form.name.data
         email = form.email.data
 
-        Members.query.filter(Members.id == id).update({
-            'name': name,
-            'email': email
-        })
+        Members.query.filter(Members.id == id).update({"name": name, "email": email})
         db.session.commit()
 
         flash("Member Updated", "success")
-        return redirect(url_for('members.all_members'))
+        return redirect(url_for("members.all_members"))
 
     member = Members.query.get(id)
-    return render_template('member/edit_member.html', form=form, member=member)
+    return render_template("member/edit_member.html", form=form, member=member)

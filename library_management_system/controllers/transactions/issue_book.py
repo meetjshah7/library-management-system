@@ -6,12 +6,12 @@ from library_management_system import db
 
 
 class IssueBook(Form):
-    book_id = SelectField('Book ID', choices=[])
-    member_id = SelectField('Member ID', choices=[])
-    per_day_rent = FloatField('Per Day Renting Fee', [validators.NumberRange(min=1)])
+    book_id = SelectField("Book ID", choices=[])
+    member_id = SelectField("Member ID", choices=[])
+    per_day_rent = FloatField("Per Day Renting Fee", [validators.NumberRange(min=1)])
 
 
-@transaction.route('/issue_book', methods=['GET', 'POST'])
+@transaction.route("/issue_book", methods=["GET", "POST"])
 def issue_book():
     form: IssueBook = IssueBook(request.form)
 
@@ -31,18 +31,20 @@ def issue_book():
     form.book_id.choices = book_list
     form.member_id.choices = member_list
 
-    if request.method == 'POST' and form.validate():
+    if request.method == "POST" and form.validate():
         book: Books = Books.query.get(form.book_id.data)
         copies_available_for_renting = book.quantity - book.issued
 
         if copies_available_for_renting == 0:
-            error = 'No copies of this book are availabe to be rented'
-            return render_template('transaction/issue_book.html', form=form, error=error)
+            error = "No copies of this book are availabe to be rented"
+            return render_template(
+                "transaction/issue_book.html", form=form, error=error
+            )
 
         new_transaction = Transactions(
             member_id=form.member_id.data,
             book_id=form.book_id.data,
-            per_day_rent=form.per_day_rent.data
+            per_day_rent=form.per_day_rent.data,
         )
         db.session.add(new_transaction)
         book.issued += 1
@@ -50,6 +52,6 @@ def issue_book():
         db.session.commit()
 
         flash("Book Issued", "success")
-        return redirect(url_for('transaction.all_transactions'))
+        return redirect(url_for("transaction.all_transactions"))
 
-    return render_template('transaction/issue_book.html', form=form)
+    return render_template("transaction/issue_book.html", form=form)
