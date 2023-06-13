@@ -69,6 +69,7 @@ def import_books():
                 if is_book_already_added(single_book["bookID"]):
                     duplicated_book_ids.append(single_book["bookID"])
                 else:
+                    single_book["num_pages"] = single_book["  num_pages"]
                     new_book = Books(
                         book=single_book, quantity=form.quantity_per_book.data
                     )

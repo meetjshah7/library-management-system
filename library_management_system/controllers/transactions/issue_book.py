@@ -30,14 +30,14 @@ def issue_book():
     book_list = []
 
     for book in books:
-        t = (book.id, book.title)
-        book_list.append(t)
+        book_tuple = (book.id, book.title)
+        book_list.append(book_tuple)
 
     members: Members = Members.query.all()
     member_list = []
     for member in members:
-        t = (member.id, member.name)
-        member_list.append(t)
+        member_tuple = (member.id, member.name)
+        member_list.append(member_tuple)
 
     form.book_id.choices = book_list
     form.member_id.choices = member_list

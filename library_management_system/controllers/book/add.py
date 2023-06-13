@@ -33,7 +33,7 @@ def add_book():
                 "authors": form.author.data,
                 "average_rating": form.average_rating.data,
                 "language_code": form.language_code.data,
-                "  num_pages": form.num_pages.data,
+                "num_pages": form.num_pages.data,
                 "ratings_count": form.ratings_count.data,
                 "text_reviews_count": form.text_reviews_count.data,
                 "publication_date": form.publication_date.data,

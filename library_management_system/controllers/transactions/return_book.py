@@ -29,7 +29,7 @@ def return_book(transaction_id):
     """
 
     form: ReturnBook = ReturnBook(request.form)
-    transaction: Transactions = Transactions.query.get(transaction_id)
+    transaction: Transactions = db.session.get(Transactions, transaction_id)
 
     current_date = datetime.now()
     difference = current_date - cast(datetime, transaction.issued_on)
@@ -38,7 +38,7 @@ def return_book(transaction_id):
 
     if request.method == "POST" and form.validate():
         amount_to_be_settled = total_charge - form.amount_paid.data
-        member: Members = Members.query.get(transaction.member_id)
+        member: Members = db.session.get(Members, transaction.member_id)
 
         outstanding_debt = member.outstanding_debt
 
@@ -60,7 +60,7 @@ def return_book(transaction_id):
         member.outstanding_debt += amount_to_be_settled
         member.amount_spent += form.amount_paid.data
 
-        book: Books = Books.query.get(transaction.book_id)
+        book: Books = db.session.get(Books, transaction.book_id)
         book.issued -= 1
 
         db.session.commit()
