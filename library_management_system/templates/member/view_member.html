@@ -1,0 +1,40 @@
+{% extends 'base.html' %}
+{% block body %}
+{% if member %}
+<br>
+<div class="d-flex justify-content-between">
+    <h2><b>{{member.name}}</b></h2>
+    <div><a href="/member/edit/{{member.id}}" class="btn btn-primary pull-right">Edit</a></div>
+</div>
+<br>
+<hr>
+<table class="table table-striped">
+    <tbody>
+        <tr>
+            <th>Member ID</th>
+            <td>{{member.id}}</td>
+        </tr>
+        <tr>
+            <th>Name</th>
+            <td>{{member.name}}</td>
+        </tr>
+        <tr>
+            <th>Email ID</th>
+            <td>{{member.email}}</td>
+        </tr>
+        <tr>
+            <th>Registered On</th>
+            <td>{{member.created_on.strftime('%b %d, %Y')}}</td>
+        </tr>
+        <tr>
+            <th>Outstanding Debt</th>
+            <td>{{member.outstanding_debt}}</td>
+        </tr>
+        <tr>
+            <th>Amount Spent</th>
+            <td>{{member.amount_spent}}</td>
+        </tr>
+    </tbody>
+</table>
+{% endif %}
+{% endblock %}

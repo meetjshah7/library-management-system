@@ -1,0 +1,88 @@
+{% extends 'base.html' %}
+{% block body %}
+<br>
+<div class="d-flex justify-content-between">
+    <h1>Transactions</h1>
+    <div>
+        <a class="btn btn-primary" href="/transaction/issue_book">Issue Book</a>
+    </div>
+</div>
+
+<hr>
+{% if transactions%}
+<table class="table align-middle mb-0 bg-white">
+    <thead class="bg-light">
+        <tr>
+            <th>Transaction ID</th>
+            <th>Book ID</th>
+            <th>Member ID</th>
+            <th>Per Day Renting Fee</th>
+            <th>Borrowed On</th>
+            <th>Returned On</th>
+            <th>Total Charge</th>
+            <th>Amount Paid</th>
+            <th></th>
+        </tr>
+    </thead>
+    <tbody>
+        {% for transaction in transactions %}
+        <tr
+            style="vertical-align: middle;">
+            <td>{{transaction.id}}</td>
+            <td>
+                <a href="/book/view/{{transaction.book_id}}"
+                    class="btn btn-link pull-right">{{"{:05d}".format(transaction.book_id)}}</a>
+            </td>
+            <td>
+                <a href="/member/view/{{transaction.member_id}}"
+                    class="btn btn-link pull-right">{{"{:03d}".format(transaction.member_id)}}</a>
+            </td>
+
+            <td>INR {{transaction.per_day_rent}}</td>
+            <td>{{transaction.issued_on.strftime('%b %d, %Y')}}</td>
+            
+            {% if not transaction.returned_on %}
+            <td>-</td>
+            {% else %}
+            <td>{{transaction.returned_on.strftime('%b %d, %Y')}}</td>
+            {% endif %}
+
+            <td>INR {{transaction.total_rent}}</td>
+            <td>INR {{transaction.amount_settled}}</td>
+            {% if not transaction.book_returned %}
+            <td>
+                <a
+                    href="return_book/{{transaction.id}}"
+                    class="btn btn-danger btn-floating"
+                    style="font-size: 14px;">
+                    <i class="fas fa-pencil"></i>
+                    Return
+                </a>
+            </td>
+            {% else %}
+            <td><span style="font-size: 14px; color: #14a44d;">Returned</span></td>
+            {% endif %}
+        </tr>
+        {% endfor %}
+    </tbody>
+</table>
+
+{% if transactions.page != 1 %}
+<a
+    href="/transaction/list?page={{transactions.page-1}}"
+    class="btn btn-success pull-right"
+    style="margin: 16px;">
+    Previous
+</a>
+{% endif %}
+{% if transactions.page != ((transactions.total/5)|round(method='ceil')) and transactions.total != 0 %}
+<a
+    href="/transaction/list?page={{transactions.page+1}}"
+    class="btn btn-success pull-right"
+    style="margin: 16px;">
+    Next
+</a>
+{% endif %}
+
+{% endif %}
+{% endblock %}
