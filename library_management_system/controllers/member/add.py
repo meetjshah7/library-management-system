@@ -1,8 +1,11 @@
-from flask import render_template, flash, redirect, url_for, request
+from flask import flash, redirect, render_template, request, url_for
+
 from library_management_system import db
-from library_management_system.controllers.member.add_edit_form import AddMember
-from . import members
+from library_management_system.controllers.member.add_edit_form import \
+    AddMember
+
 from ...models import Members
+from . import members
 
 
 @members.route("/add", methods=["GET", "POST"])

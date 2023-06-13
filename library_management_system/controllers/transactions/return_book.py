@@ -1,10 +1,13 @@
 from datetime import datetime
-from flask import flash, redirect, render_template, request, url_for
-from . import transaction
-from wtforms import Form, FloatField, validators
-from ...models import Transactions, Members, Books
 from typing import cast
+
+from flask import flash, redirect, render_template, request, url_for
+from wtforms import FloatField, Form, validators
+
 from library_management_system import db
+
+from ...models import Books, Members, Transactions
+from . import transaction
 
 
 class ReturnBook(Form):

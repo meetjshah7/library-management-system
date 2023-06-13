@@ -1,7 +1,8 @@
 from flask import render_template, request
-from . import book
-from ...models import Books
 from sqlalchemy import or_
+
+from ...models import Books
+from . import book
 
 
 @book.route("/search", methods=["GET", "POST"])

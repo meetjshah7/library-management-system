@@ -1,9 +1,12 @@
 import unittest
 from datetime import datetime, timedelta
-from library_management_system import start_app, db
-from library_management_system.models import Transactions, Members, Books
-from library_management_system.controllers.transactions.return_book import ReturnBook
+
 from werkzeug.datastructures import MultiDict
+
+from library_management_system import db, start_app
+from library_management_system.controllers.transactions.return_book import \
+    ReturnBook
+from library_management_system.models import Books, Members, Transactions
 
 
 class ReturnBookTestCase(unittest.TestCase):

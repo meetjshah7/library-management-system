@@ -1,8 +1,10 @@
 from flask import flash, redirect, render_template, request, url_for
-from wtforms import Form, SelectField, FloatField, validators
-from . import transaction
-from ...models import Books, Members, Transactions
+from wtforms import FloatField, Form, SelectField, validators
+
 from library_management_system import db
+
+from ...models import Books, Members, Transactions
+from . import transaction
 
 
 class IssueBook(Form):

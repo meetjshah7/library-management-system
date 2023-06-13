@@ -1,4 +1,5 @@
-from wtforms import Form, validators, StringField, FloatField, IntegerField, DateField
+from wtforms import (DateField, FloatField, Form, IntegerField, StringField,
+                     validators)
 
 
 class AddBook(Form):

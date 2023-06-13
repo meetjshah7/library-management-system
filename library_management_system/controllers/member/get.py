@@ -1,6 +1,7 @@
 from flask import render_template
-from . import members
+
 from ...models import Members
+from . import members
 
 
 @members.route("/view/<string:id>", methods=["GET"])

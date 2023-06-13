@@ -1,8 +1,9 @@
 from flask import flash, redirect, url_for
-from . import book
 
 from library_management_system import db
+
 from ...models import Books
+from . import book
 
 
 @book.route("/delete/<string:id>", methods=["POST"])

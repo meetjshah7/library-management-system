@@ -1,6 +1,7 @@
 from flask import render_template
-from . import book
+
 from ...models import Books
+from . import book
 
 
 @book.route("/view/<string:id>")

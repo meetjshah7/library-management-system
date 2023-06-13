@@ -1,7 +1,10 @@
+"""
+    Module -> All transactions
+"""
 from flask import render_template, request
 
-from ...models import Transactions
-from . import transaction
+from library_management_system.controllers.transactions import transaction
+from library_management_system.models.transactions import Transactions
 
 
 @transaction.route("/list")
