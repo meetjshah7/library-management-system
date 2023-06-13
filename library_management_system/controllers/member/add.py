@@ -17,17 +17,20 @@ def add_member():
     form: AddMember = AddMember(request.form)
 
     if request.method == "POST" and form.validate():
-        name = form.name.data
-        email = form.email.data
+        try:
+            name = form.name.data
+            email = form.email.data
 
-        new = {"name": name, "email": email, "outstanding_debt": 0, "amount_spent": 0}
+            new = {"name": name, "email": email, "outstanding_debt": 0, "amount_spent": 0}
 
-        new_member = Members(new)
-        db.session.add(new_member)
-        db.session.commit()
+            new_member = Members(new)
+            db.session.add(new_member)
+            db.session.commit()
 
-        flash("Wohoo! New Member Added Successfully", "success")
-
-        return redirect(url_for("members.all_members"))
+            flash("Wohoo! New Member Added Successfully", "success")
+            return redirect(url_for("members.all_members"))
+        except Exception as e:
+            flash(f"Some error occurred {e}", "danger")
+            return render_template("member/add_member.html", form=form)
 
     return render_template("member/add_member.html", form=form)
