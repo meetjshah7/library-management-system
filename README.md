@@ -1,4 +1,4 @@
-# library-management-system
+# Library Management System
 
 ## Home Page
 ![image](https://github.com/meetjshah7/library-management-system/assets/119717771/4f3e5297-8696-4010-a730-f1d36115a9c1)
