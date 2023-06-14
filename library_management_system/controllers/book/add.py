@@ -15,7 +15,7 @@ def add_book():
     Methods:
         GET: Display the form to add a new book.
         Returns:
-            render_template: Renders the 'add_book' template with the form and book data.
+            render_template: Renders the 'Add Book' template with the form and book data.
 
         POST: Handle the submission of the form and add the book to the database.
         Returns:

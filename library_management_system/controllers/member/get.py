@@ -5,7 +5,7 @@ from . import members
 
 
 @members.route("/view/<string:id>", methods=["GET"])
-def viewMember(id):
+def view_member(id):
     """
     View the details of a member.
 
@@ -13,7 +13,7 @@ def viewMember(id):
         id (str): The ID of the member to be viewed.
 
     Returns:
-        Renders the 'member/view_member.html' template with the member details.
+        Renders the 'Member Details' template with the member details.
         If the member does not exist, it renders the template with a warning message.
     """
 

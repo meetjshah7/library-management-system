@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import cast
+from typing import Optional, cast
 
 from flask import flash, redirect, render_template, request, url_for
 from wtforms import FloatField, Form, validators
@@ -23,25 +23,25 @@ def return_book(transaction_id):
         transaction_id (str): The ID of the transaction for returning the book.
 
     Returns:
-        If the request method is GET, it renders the 'transaction/return_book.html' template
+        If the request method is GET, it renders the 'Return Book' template
         with the return book form containing the necessary transaction details.
 
         If the request method is POST and the form is valid, it processes the return book transaction.
-        On Success, it redirects to the 'transaction.all_transactions' endpoint.
-        On any Error, it renders the 'transaction/return_book.html' template with the error message.
+        On Success, it redirects to the 'All Transactions' endpoint.
+        On any Error, it renders the 'Return Book' template with the error message.
     """
 
     form: ReturnBook = ReturnBook(request.form)
-    transaction: Transactions = db.session.get(Transactions, transaction_id)
+    transaction: Transactions = cast(Transactions, db.session.get(Transactions, transaction_id))
 
     current_date = datetime.now()
     difference = current_date - cast(datetime, transaction.issued_on)
-    difference = difference.days
-    total_charge = difference * transaction.per_day_rent
+    difference_in_days = difference.days
+    total_charge = difference_in_days * transaction.per_day_rent
 
     if request.method == "POST" and form.validate():
         amount_to_be_settled = total_charge - form.amount_paid.data
-        member: Members = db.session.get(Members, transaction.member_id)
+        member: Members = cast(Members, db.session.get(Members, transaction.member_id))
 
         outstanding_debt = member.outstanding_debt
 
@@ -63,7 +63,7 @@ def return_book(transaction_id):
         member.outstanding_debt += amount_to_be_settled
         member.amount_spent += form.amount_paid.data
 
-        book: Books = db.session.get(Books, transaction.book_id)
+        book: Books = cast(Books, db.session.get(Books, transaction.book_id))
         book.issued -= 1
 
         db.session.commit()

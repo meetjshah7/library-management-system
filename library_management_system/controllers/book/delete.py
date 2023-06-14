@@ -22,8 +22,6 @@ def delete_book(id):
         Books.query.filter(Books.id == id).delete()
         db.session.commit()
     except Exception as e:
-        print(e)
-
         flash("Book could not be deleted", "danger")
         flash(str(e), "danger")
 

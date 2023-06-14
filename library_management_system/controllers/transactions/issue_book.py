@@ -19,10 +19,10 @@ def issue_book():
     Issue a book to a member.
 
     Returns:
-        Renders the 'transaction/issue_book.html' template with the form to issue a book.
+        Renders the 'Issue Book' template with the form to issue a book.
 
         If the request method is POST and the form is valid, it adds a new transaction to the database
-        and updates the book's issued count. If successful, it redirects to the 'transaction.all_transactions' route.
+        and updates the book's issued count. If successful, it redirects to the 'All Transactions' route.
         If the book is not available for renting, it renders the template with an error message.
     """
 
@@ -45,8 +45,8 @@ def issue_book():
     form.member_id.choices = member_list
 
     if request.method == "POST" and form.validate():
-        book: Books = Books.query.get(form.book_id.data)
-        copies_available_for_renting = book.quantity - book.issued
+        book_to_issue: Books = Books.query.get(form.book_id.data)
+        copies_available_for_renting = book_to_issue.quantity - book_to_issue.issued
 
         if copies_available_for_renting == 0:
             error = "No copies of this book are availabe to be rented"
@@ -60,7 +60,7 @@ def issue_book():
             per_day_rent=form.per_day_rent.data,
         )
         db.session.add(new_transaction)
-        book.issued += 1
+        book_to_issue.issued += 1
 
         db.session.commit()
 

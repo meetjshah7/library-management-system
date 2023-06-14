@@ -9,7 +9,7 @@ def home_page():
     Render the home page.
 
     Returns:
-        Renders the 'home.html' template with the title set to 'Home'.
+        Renders the 'home' template.
     """
 
     return render_template("home.html", title="Home")
