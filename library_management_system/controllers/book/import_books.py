@@ -1,9 +1,11 @@
-from flask import flash, redirect, render_template, request, url_for
-from wtforms import Form, validators, StringField, IntegerField
-from . import book
 import requests
-from ...models import Books
+from flask import flash, redirect, render_template, request, url_for
+from wtforms import Form, IntegerField, StringField, validators
+
 from library_management_system import db
+
+from ...models import Books
+from . import book
 
 
 class ImportBooks(Form):
@@ -26,6 +28,12 @@ class ImportBooks(Form):
 
 
 def import_books_via_frappe_API(parameters):
+    """
+        POST request to Frappe API
+
+        Returns:
+            The list of books if found. Else returns None.
+    """
     url = "https://frappe.io/api/method/frappe-library"
     r = requests.get(url=url, params=parameters)
     res = r.json()
@@ -37,6 +45,15 @@ def import_books_via_frappe_API(parameters):
 
 
 def is_book_already_added(book_id):
+    """
+        Check if imported book is already present
+
+        Parameters:
+            book_id: ID of the book imported
+
+        Returns:
+            boolean
+    """
     book = Books.query.filter_by(book_id=book_id).first()
     if book is None:
         return False
@@ -45,6 +62,14 @@ def is_book_already_added(book_id):
 
 @book.route("/import", methods=["GET", "POST"])
 def import_books():
+    """
+        Import books via Frappe API into the database
+
+        Returns:
+            If request method is GET, it renders the 'Import Book' form
+            If request method is POST, it redirects to the route for displaying all books.
+
+    """
     form: ImportBooks = ImportBooks(request.form)
 
     if request.method == "POST" and form.validate():

@@ -1,7 +1,9 @@
 from flask import flash, redirect, url_for
-from . import members
-from ...models import Members
+
 from library_management_system import db
+
+from ...models import Members
+from . import members
 
 
 @members.route("/delete/<string:id>", methods=["POST"])

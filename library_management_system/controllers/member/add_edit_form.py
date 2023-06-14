@@ -1,4 +1,4 @@
-from wtforms import Form, validators, StringField, EmailField
+from wtforms import EmailField, Form, StringField, validators
 
 
 class AddMember(Form):

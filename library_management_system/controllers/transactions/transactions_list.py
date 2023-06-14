@@ -1,5 +1,9 @@
+"""
+    Module -> All transactions
+"""
 from flask import render_template, request
-from . import transaction
+
+from library_management_system.controllers.transactions import transaction
 from ...models import Transactions
 
 
@@ -9,7 +13,7 @@ def all_transactions():
     Retrieve a paginated list of all transactions.
 
     Returns:
-        Renders the 'book/books.html' template with the paginated list of transactions.
+        Renders the 'All Transactions' template with the paginated list of transactions.
     """
 
     page = request.args.get("page", 1, type=int)

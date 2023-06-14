@@ -1,5 +1,7 @@
 from flask import render_template, request
+
 from library_management_system.models import Members
+
 from . import members
 
 
@@ -9,7 +11,7 @@ def all_members():
     Display a list of all members.
 
     Returns:
-        Renders the 'member/members.html' template with the list of members
+        Renders the 'All Members' template with the paginated list of members
     """
 
     page = request.args.get("page", 1, type=int)

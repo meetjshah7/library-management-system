@@ -1,8 +1,10 @@
 from flask import flash, redirect, render_template, request, url_for
-from library_management_system.controllers.book.add_edit_form import AddBook
-from . import book
-from ...models import Books
+
 from library_management_system import db
+from library_management_system.controllers.book.add_edit_form import AddBook
+
+from ...models import Books
+from . import book
 
 
 @book.route("/edit/<string:id>", methods=["GET", "POST"])

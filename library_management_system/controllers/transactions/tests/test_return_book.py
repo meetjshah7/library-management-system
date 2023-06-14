@@ -1,16 +1,20 @@
+from typing import Optional
 import unittest
 from datetime import datetime, timedelta
-from library_management_system import start_app, db
-from library_management_system.models import Transactions, Members, Books
-from library_management_system.controllers.transactions.return_book import ReturnBook
+
 from werkzeug.datastructures import MultiDict
+
+from library_management_system import db, start_app
+from library_management_system.controllers.transactions.return_book import \
+    ReturnBook
+from library_management_system.models import Books, Members, Transactions
 
 
 class ReturnBookTestCase(unittest.TestCase):
     def setUp(self):
         app = start_app()[0]
         app.config["TESTING"] = True
-        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///:memory:"
+        app.config["SQLALCHEMY_DATABASE_URI"] = "sqlite:///testdb"
         self.app = app.test_client()
         with app.app_context():
             db.create_all()
@@ -75,18 +79,21 @@ class ReturnBookTestCase(unittest.TestCase):
             self.assertIn(b"Book Returned", response.data)
 
             # Assert if the transaction and member records were updated correctly
-            updated_transaction: Transactions = db.session.get(Transactions, transaction.id)
-            updated_member: Members = db.session.get(Members, member.id)
+            updated_transaction: Optional[Transactions] = db.session.get(Transactions, transaction.id)
+            updated_member: Optional[Members] = db.session.get(Members, member.id)
 
+            assert updated_transaction is not None
             self.assertIsNotNone(updated_transaction.returned_on)
             self.assertEqual(updated_transaction.amount_settled, 10)
             self.assertTrue(updated_transaction.book_returned)
 
+            assert updated_member is not None
             self.assertEqual(updated_member.outstanding_debt, -10)
             self.assertEqual(updated_member.amount_spent, 10)
 
             # Asseert if the book record was updated correctly
-            updated_book: Books = db.session.get(Books, book.id)
+            updated_book: Optional[Books] = db.session.get(Books, book.id)
+            assert updated_book is not None
             self.assertEqual(updated_book.issued, 0)
 
     def test_return_book_violate_outstanding_debt(self):

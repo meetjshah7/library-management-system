@@ -1,5 +1,7 @@
 from flask import render_template, request
+
 from library_management_system.models import Books
+
 from . import book
 
 
@@ -9,7 +11,7 @@ def all_books():
     Display a paginated list of all books.
 
     Returns:
-        Renders the 'book/books.html' template with the paginated list of books.
+        Renders the 'All Books' template with the paginated list of books.
     """
 
     page = request.args.get("page", 1, type=int)

@@ -1,10 +1,11 @@
 from flask import render_template
-from . import book
+
 from ...models import Books
+from . import book
 
 
 @book.route("/view/<string:id>")
-def viewBook(id):
+def view_book(id):
     """
     Display the details of a book.
 
@@ -12,7 +13,7 @@ def viewBook(id):
         id (str): The ID of the book.
 
     Returns:
-        Renders the 'book/view_book.html' template with the book details.
+        Renders the 'Book Details' template with the book details.
     """
 
     book = Books.query.get(id)

@@ -1,8 +1,10 @@
 from flask import flash, redirect, render_template, request, url_for
-from library_management_system.controllers.book.add_edit_form import AddBook
-from . import book
-from ...models import Books
+
 from library_management_system import db
+from library_management_system.controllers.book.add_edit_form import AddBook
+
+from ...models import Books
+from . import book
 
 
 @book.route("/add", methods=["GET", "POST"])
@@ -13,7 +15,7 @@ def add_book():
     Methods:
         GET: Display the form to add a new book.
         Returns:
-            render_template: Renders the 'add_book' template with the form and book data.
+            render_template: Renders the 'Add Book' template with the form and book data.
 
         POST: Handle the submission of the form and add the book to the database.
         Returns:

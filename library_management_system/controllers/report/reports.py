@@ -1,7 +1,8 @@
 from flask import render_template
-from . import report
-from ...models import Books, Members, Transactions
 from sqlalchemy import func
+
+from ...models import Books, Members, Transactions
+from . import report
 
 
 @report.route("/reports")
