@@ -1,6 +1,7 @@
 from datetime import datetime
 
 from library_management_system import db
+from sqlalchemy import func
 
 
 class Books(db.Model):
@@ -14,7 +15,7 @@ class Books(db.Model):
     issued = db.Column(db.Integer, nullable=False, default=0)
     author = db.Column(db.String(255), nullable=False)
     added = db.Column(
-        db.DateTime(timezone=True), default=datetime.now(), nullable=False
+        db.DateTime(timezone=True), server_default=func.now(), nullable=False
     )
     average_rating = db.Column(db.Integer, nullable=True)
     language_code = db.Column(db.String(10), nullable=False)
@@ -55,7 +56,9 @@ class Members(db.Model):
     amount_spent = db.Column(db.Integer, nullable=False)
     books = db.relationship("Transactions", backref="members", lazy=True)
     created_on = db.Column(
-        db.DateTime(timezone=True), default=datetime.now(), nullable=False
+        db.DateTime(timezone=True),
+        server_default=func.now(),
+        nullable=False
     )
 
     def __init__(self, member):
@@ -72,7 +75,7 @@ class Transactions(db.Model):
     member_id = db.Column(db.Integer, db.ForeignKey("members.id"), nullable=False)
     book_id = db.Column(db.Integer, db.ForeignKey("books.id"), nullable=False)
     issued_on = db.Column(
-        db.DateTime(timezone=True), default=datetime.now(), nullable=False
+        db.DateTime(timezone=True), server_default=func.now(), nullable=False
     )
     returned_on = db.Column(db.DateTime(timezone=True))
     book_returned = db.Column(db.Boolean, nullable=False, default=False)
@@ -81,8 +84,8 @@ class Transactions(db.Model):
     amount_settled = db.Column(db.Integer, nullable=False, default=0)
     updated_on = db.Column(
         db.DateTime(timezone=True),
-        onupdate=datetime.now(),
-        default=datetime.now(),
+        onupdate=func.now(),
+        server_default=func.now(),
         nullable=False,
     )
 

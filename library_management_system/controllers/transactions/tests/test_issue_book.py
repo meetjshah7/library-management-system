@@ -13,7 +13,6 @@ class IssueBookTestCase(unittest.TestCase):
         with app.app_context():
             db.create_all()
 
-
     def tearDown(self):
         with self.app.application.app_context():
             db.session.remove()
@@ -53,7 +52,7 @@ class IssueBookTestCase(unittest.TestCase):
 
             response = self.app.post("/transaction/issue_book", data=data, follow_redirects=True)
             self.assertEqual(response.status_code, 200)
-            
+
             transaction = db.session.query(Transactions).filter(
                 Transactions.book_id == data["book_id"], Transactions.member_id == data["member_id"]
             ).one()
@@ -84,7 +83,7 @@ class IssueBookTestCase(unittest.TestCase):
 
             db.session.add_all([new_book, new_member])
             db.session.commit()
-            
+
             data = {
                 "book_id": "1",
                 "member_id": "1",

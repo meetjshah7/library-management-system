@@ -20,6 +20,8 @@ def all_transactions():
     transactions = Transactions.query.order_by(Transactions.updated_on.desc()).paginate(
         page=page, per_page=5
     )
+    for t in transactions:
+        print(t.updated_on)
     return render_template(
         "transaction/transactions.html", title="Transactions", transactions=transactions
     )
