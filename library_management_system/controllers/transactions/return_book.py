@@ -1,5 +1,5 @@
 from datetime import datetime
-from typing import Optional, cast
+from typing import cast
 
 from flask import flash, redirect, render_template, request, url_for
 from wtforms import FloatField, Form, validators
