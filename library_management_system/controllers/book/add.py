@@ -45,7 +45,6 @@ def add_book():
         )
         db.session.add(new_book)
         db.session.commit()
-
         flash("Book Added", "success")
 
         return redirect(url_for("book.all_books"))
