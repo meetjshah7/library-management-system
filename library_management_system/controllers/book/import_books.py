@@ -6,6 +6,7 @@ from library_management_system import db
 
 from ...models import Books
 from . import book
+from ..ratelimit import rate_limit
 
 
 class ImportBooks(Form):
@@ -26,7 +27,11 @@ class ImportBooks(Form):
         "Publisher", [validators.Optional(), validators.Length(min=2, max=255)]
     )
 
-
+@rate_limit.wait(
+    api_name='import_book_frappe',
+    max_calls_in_window=1,
+    window_period_in_seconds=60
+)
 def import_books_via_frappe_API(parameters):
     """
         POST request to Frappe API
@@ -38,7 +43,7 @@ def import_books_via_frappe_API(parameters):
     r = requests.get(url=url, params=parameters)
     res = r.json()
 
-    if not res["message"]:
+    if 'message' not in res:
         return None
 
     return res["message"]
